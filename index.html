@@ -5,17 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/style.css">
-    <title>Document</title>
+    <title>导航</title>
 </head>
 <body>
     <header></header>
+    
     <main>
+        
         <div class="wrapper" id="zzz"></div>
     </main>
     <footer></footer>
 </body>
 <script>
-
+    //1.初始化数据
     var keys = {
         0:{0:'q',1:'w',2:'e',3:'r',4:'t',5:'y',6:'u',7:'i',8:'o',9:'p',length:10},
         1:{0:'a',1:'s',2:'d',3:'f',4:'g',5:'h',6:'j',7:'k',8:'l',length:9},
@@ -27,43 +29,79 @@
         w: 'weibo.com',
         t: 'taobao.com'
     }
-    var hashInLocalStorage = JSON.parse(localStorage.getItem('uuu')||'null')
+    var hashInLocalStorage =  gfls('uuu')//取出uuu中的hash 
     if(hashInLocalStorage){
-        hash = hashInLocalStorage
+        hash = hashInLocalStorage // 覆盖当前hash
+    }
+    function gfls(name){
+        return JSON.parse(localStorage.getItem(name)||'null')
     }
 
-    index = 0
-    while(index<keys['length']){       
-        div1 = document.createElement('div')
-        zzz.appendChild(div1)
-        row = keys[index]        
-        index2 = 0
-        while(index2<row['length']){
-            k = document.createElement('kbd')
-            div1.appendChild(k)
-            k.textContent = row[index2]
-            buttonx = document.createElement('button')
-            buttonx.textContent = 'E'
-            buttonx.id = row[index2]
-            buttonx.onclick = function(xzkjcnxlkcjlk){
-                key = xzkjcnxlkcjlk.target.id
-                x = prompt('设置你想要的网址')
-                hash[key] = x
-                localStorage.setItem('uuu',JSON.stringify(hash))
-            }
-            k.appendChild(buttonx)
+    //生成键盘   
+    //循环创建div 并加到 zzz中
+    for(var index = 0;index<keys['length'];index++){               
+            var div1 = cj('div',{className:'row'}) //创建div
+            zzz.appendChild(div1) //在id为ZZZ的对象中加入div        
             
-            index2++
-        }
-        index++
-    }
-    document.onkeypress = function(xzkjcnxlkcjlk){
-        key = xzkjcnxlkcjlk['key']
-        wz = hash[key]
-        // location.href = 'http://'+wz
-        window.open('http://'+wz,'_blank')
-    }
-  
+            var row = keys[index]   //获取 key的  的三个数组             
+            //在div中循环创建 kbd  然后加入 内容
+        for(var index2 = 0;index2<row['length'];index2++){           
+            var k = cj('kbd',{className:'keys'}) //创建kbd标签 根据key中对象的个数
+            div1.appendChild(k) //加入到div中                         
+            var img = cj('img')
+            k.appendChild(img)
+            if(hash[row[index2]]){
+                img.src = 'http://' + hash[row[index2]] + '/favicon.ico'
+            }else{
+                img.src = '//i.loli.net/2018/07/20/5b5192d32b8c2.png'
+            }
+            img.onerror = function(e){
+                e.target.src = '//i.loli.net/2018/07/20/5b5192d32b8c2.png'
+            }
+            span = cj('span')
+             span.textContent = row[index2] //获取 key中 相应index对象的属性的值
+             span.class = 'text'   
+             k.appendChild(span)
+             buttonx = cj('button',{id:row[index2]}) // 在每个kbd中添加button标签
+             buttonx.textContent = 'e'  
+             //给每个button 加ID id就是button所在kbd的 key的对象的值
+             buttonx.onclick = function(xzkjcnxlkcjlk){
+                var button2 = xzkjcnxlkcjlk.target
+                var img2 = button2.previousSibling
+                var key = button2.id  //获取所点击button相应的id  
+                var x = prompt('设置你想要的网址')  // 设置一个可以收入网址的弹窗 返回输入的内容
+                
+                    hash[key] = x  // 把这个网址赋值到相应的hash对象中去
+                    img2.src = 'http://' + x + '/favicon.ico'
+                    img2.onerror = function(e){
+                        e.target.src = '//i.loli.net/2018/07/20/5b5192d32b8c2.png'
+                    }
+                
+                
 
+               localStorage.setItem('uuu',JSON.stringify(hash))  // 把这个改变后的hash储存到本地 容器名uuu 
+            }
+            k.appendChild(img)
+            k.appendChild(buttonx)
+        }
+               
+    }
+    
+
+            //3.监听键盘打开相应的网址
+            document.onkeypress = function(xzkjcnxlkcjlk){
+                var key = xzkjcnxlkcjlk['key']
+                var wz = hash[key]
+                // location.href = 'http://'+wz
+                window.open('http://'+wz,'_blank')
+            }
+
+            function cj(tagName,attributes){
+                var element = document.createElement(tagName)
+                for(var keykey in attributes){  // key为属性名 attributes 中传过来的参数
+                    element[keykey] = attributes[keykey]
+                }
+                return element
+            }
 </script>
 </html>

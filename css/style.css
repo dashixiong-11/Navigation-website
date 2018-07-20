@@ -7,32 +7,60 @@
 a{
     text-decoration: none;
 }
-kbd{
-    border: 1px solid red;
-    width: 4em;
-    height: 4em;
-    display: inline-block;
-    text-transform: uppercase;
-    position: relative;
+body{
+    background:gray url(./wallhaven-672873.jpg)  center center;
+    background-size: cover; /*让背景图片自适应屏幕*/
 }
+  
 kbd button{
     position: absolute;
-    left: 0;
-    top:0;
+    right: 0;
+    bottom:0;
     display: none;
 }
 kbd:hover button{
     display: inline-block;
 }
 #zzz div:nth-child(2){
-    margin-left: 1em;
+    margin-left:-22px;
 }
 #zzz div:nth-child(3){
-    margin-left: 1.8em;
+    margin-left: -80px;
 }
 #zzz{
     display: inline-block;
 }
 main{
-    text-align: center
+    text-align: center;
+    display: flex;
+    justify-content:center;
+    align-items: center; 
+    height: 100vh;   /* viewport height 视口高度*/
+}
+.keys{
+    width: 55px;
+    height: 38px;
+    background: linear-gradient(to bottom,#292929 0%,#111111 100%);
+    border: 1px solid #373737;
+    color: #c5c5c5;
+    border-radius: 7px;
+    box-shadow: 0 0 0 1px #1a1b1c,0 0 0 2px #1f2020,0 3px 1px 2px #696969,0 0 0 2px #1a1b1c;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 8px;
+    text-transform: uppercase;
+    position: relative;
+}
+.keys img{
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    bottom: 2px;
+    left: 3px;
+}
+.keys span{
+    position: absolute;
+    top: 2px;
+    left: 4px;
 }
