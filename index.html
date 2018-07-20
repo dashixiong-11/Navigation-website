@@ -39,50 +39,23 @@
 
     //生成键盘   
     //循环创建div 并加到 zzz中
-    for(var index = 0;index<keys['length'];index++){               
+            for(var index = 0;index<keys['length'];index++){               
             var div1 = cj('div',{className:'row'}) //创建div
             zzz.appendChild(div1) //在id为ZZZ的对象中加入div        
             
             var row = keys[index]   //获取 key的  的三个数组             
             //在div中循环创建 kbd  然后加入 内容
-        for(var index2 = 0;index2<row['length'];index2++){           
-            var k = cj('kbd',{className:'keys'}) //创建kbd标签 根据key中对象的个数
-            div1.appendChild(k) //加入到div中                         
-            var img = cj('img')
+            for(var index2 = 0;index2<row['length'];index2++){           
+            var k = cj('kbd',{className:'keys'}) //创建kbd标签 根据key中对象的个数                                   
+            var img = createImage(hash[row[index2]])
+            var span = createSpan(row[index2])
+             //获取 key中 相应index对象的属性的值        
+            var buttonx = createButton(row[index2]) 
             k.appendChild(img)
-            if(hash[row[index2]]){
-                img.src = 'http://' + hash[row[index2]] + '/favicon.ico'
-            }else{
-                img.src = '//i.loli.net/2018/07/20/5b5192d32b8c2.png'
-            }
-            img.onerror = function(e){
-                e.target.src = '//i.loli.net/2018/07/20/5b5192d32b8c2.png'
-            }
-            span = cj('span')
-             span.textContent = row[index2] //获取 key中 相应index对象的属性的值
-             span.class = 'text'   
-             k.appendChild(span)
-             buttonx = cj('button',{id:row[index2]}) // 在每个kbd中添加button标签
-             buttonx.textContent = 'e'  
-             //给每个button 加ID id就是button所在kbd的 key的对象的值
-             buttonx.onclick = function(xzkjcnxlkcjlk){
-                var button2 = xzkjcnxlkcjlk.target
-                var img2 = button2.previousSibling
-                var key = button2.id  //获取所点击button相应的id  
-                var x = prompt('设置你想要的网址')  // 设置一个可以收入网址的弹窗 返回输入的内容
-                
-                    hash[key] = x  // 把这个网址赋值到相应的hash对象中去
-                    img2.src = 'http://' + x + '/favicon.ico'
-                    img2.onerror = function(e){
-                        e.target.src = '//i.loli.net/2018/07/20/5b5192d32b8c2.png'
-                    }
-                
-                
-
-               localStorage.setItem('uuu',JSON.stringify(hash))  // 把这个改变后的hash储存到本地 容器名uuu 
-            }
+            k.appendChild(span)
             k.appendChild(img)
             k.appendChild(buttonx)
+            div1.appendChild(k)
         }
                
     }
@@ -92,7 +65,6 @@
             document.onkeypress = function(xzkjcnxlkcjlk){
                 var key = xzkjcnxlkcjlk['key']
                 var wz = hash[key]
-                // location.href = 'http://'+wz
                 window.open('http://'+wz,'_blank')
             }
 
@@ -102,6 +74,48 @@
                     element[keykey] = attributes[keykey]
                 }
                 return element
+            }
+
+            function createSpan(textContent){
+                var span = cj('span',{className:'text'})
+                span.textContent = textContent
+                return span
+            }
+
+            function createButton(id){
+                var buttonx = cj('button',{id:id}) // 在每个kbd中添加button标签
+             buttonx.textContent = 'e'  
+             //给每个button 加ID id就是button所在kbd的 key的对象的值
+             buttonx.onclick = function(xzkjcnxlkcjlk){
+                var button2 = xzkjcnxlkcjlk.target
+                var img2 = button2.previousSibling
+                var key = button2.id  //获取所点击button相应的id  
+                var x = prompt('设置你想要的网址')  // 设置一个可以收入网址的弹窗 返回输入的内容
+                    if(x){
+                        hash[key] = x  // 把这个网址赋值到相应的hash对象中去
+                        img2.src = 'http://' + x + '/favicon.ico'
+                        img2.onerror = function(e){
+                            e.target.src = '//i.loli.net/2018/07/20/5b5192d32b8c2.png'
+                        }
+                        localStorage.setItem('uuu',JSON.stringify(hash))  // 把这个改变后的hash储存到本地 容器名uuu 
+                            } 
+                        console.log(x)
+                    }
+                return buttonx 
+            }
+
+            function createImage(domain){
+                var img = cj('img')
+                //加入到div中
+                if(domain){
+                    img.src = 'http://' + domain + '/favicon.ico'
+                }else{
+                    img.src = '//i.loli.net/2018/07/20/5b5192d32b8c2.png'
+                }
+                img.onerror = function(e){
+                    e.target.src = '//i.loli.net/2018/07/20/5b5192d32b8c2.png'
+                }
+                return img
             }
 </script>
 </html>
