@@ -12,13 +12,14 @@ body{
     background-size: cover; /*让背景图片自适应屏幕*/
 }
   
-kbd button{
+kbd div{
     position: absolute;
-    right: 0;
-    bottom:0;
+    right: 4px;
+    bottom:2px;
     display: none;
+    cursor:default;
 }
-kbd:hover button{
+kbd:hover div{
     display: inline-block;
 }
 #zzz div:nth-child(2){
